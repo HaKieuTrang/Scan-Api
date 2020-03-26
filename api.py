@@ -34,11 +34,11 @@ def index():
             cursor.close()
 
         except mysql.connector.Error as error:
-            message = "Failed to insert record into Scan Info table {}".format(error)
-            return message
+            print("Failed to insert record into Scan Info table {}".format(error))
         finally:
             if (connection.is_connected()):
                 connection.close()
+                print("MySQL connection is closed")
         return out
     return render_template('index.html', title="Scan", form=form)
 
