@@ -41,11 +41,12 @@
     <h2>ClamAV Scan</h2>
     <form action="" method="post" novalidate>
         {{ form.hidden_tag() }}
-        <p>
-            {{ form.url.label }}<br>
-            {{ form.url(size=32) }}
-        </p>
-        <p>{{ form.submit() }}</p>
+        <table>
+            <tr>
+                <td>{{ form.scan_file }}</td>
+                <td>{{ form.scan_folder }}</td>
+            </tr>
+        </table>
     </form>
 </div>
 {% endblock %}
