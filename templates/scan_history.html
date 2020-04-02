@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/scan_history.css') }}">
+{% endblock %}
+{% block body %}
+<h2>ClamAV Scan History</h2>
+<div class="container">
+    <div class="row">
+        <div class="filterable">
+            <button class="btn-filter">
+                Filter
+            </button>
+            <table class="table">
+                <thead>
+                <tr class="filters">
+                    <th><input type="text" placeholder="Id" disabled></th>
+                    <th><input type="text" placeholder="Path" disabled></th>
+                    <th><input type="text" placeholder="Date time" disabled></th>
+                    <th><input type="text" placeholder="Result" disabled></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for item in data %}
+                <tr>
+                    <td class="id">{{item[0]}}</td>
+                    <td>{{item[1]}}</td>
+                    <td>{{item[2]}}</td>
+                    <td>{{item[3]}}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script src="{{url_for('static', filename='js/scan_history.js')}}"></script>
+{% endblock %}

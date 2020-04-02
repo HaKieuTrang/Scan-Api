@@ -1,9 +1,10 @@
 from urllib import request
 from flask import Flask, render_template, request, url_for
 import subprocess
-from Form import Choose
+from form import Choose
 from tkinter import filedialog, Tk
-from AddInfo import add_info
+from insert_data import insert_data
+from select_data import select_data
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '5eb8738961b3e9b9d1f636d240b6ca4a'
@@ -25,8 +26,8 @@ def index():
                                            shell=True)
                 stdout, stderr = process.communicate()
                 out = stdout.decode('utf-8')
-                add_info(file_path,out)
-                return out
+                insert_data(file_path, out)
+                return render_template('index.html', title="Scan", form=form, data=out)
         elif 'scan_folder' in request.form:
             root = Tk()
             root.withdraw()
@@ -39,8 +40,11 @@ def index():
                                            shell=True)
                 stdout, stderr = process.communicate()
                 out = stdout.decode('utf-8')
-                add_info(folder_path, out)
-                return out
+                insert_data(folder_path, out)
+                return render_template('index.html', title="Scan", form=form, data=out)
+        elif 'show_history' in request.form:
+            data = select_data()
+            return render_template('scan_history.html', title='Scan History', data=data)
     return render_template('index.html', title="Scan", form=form)
 
 

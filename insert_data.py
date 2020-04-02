@@ -2,7 +2,7 @@ import mysql.connector
 import datetime
 
 
-def add_info(file_path, out):
+def insert_data(file_path, out):
     try:
         connection = mysql.connector.connect(host='localhost',
                                              database='clamav_scan',
