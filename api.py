@@ -33,7 +33,7 @@ def index():
             root.withdraw()
             folder_path = filedialog.askdirectory(title='Select a folder', parent=root)
             if folder_path:
-                dir2 = 'clamscan ' + folder_path
+                dir2 = 'clamscan -r ' + folder_path
                 process = subprocess.Popen(dir2,
                                            stdout=subprocess.PIPE,
                                            stderr=subprocess.PIPE,
@@ -42,6 +42,17 @@ def index():
                 out = stdout.decode('utf-8')
                 insert_data(folder_path, out)
                 return render_template('index.html', title="Scan", form=form, data=out)
+        elif 'scan_hard_drive' in request.form:
+            hard_drive_path = '/media'
+            dir2 = 'clamscan -r ' + hard_drive_path
+            process = subprocess.Popen(dir2,
+                                       stdout=subprocess.PIPE,
+                                       stderr=subprocess.PIPE,
+                                       shell=True)
+            stdout, stderr = process.communicate()
+            out = stdout.decode('utf-8')
+            insert_data(hard_drive_path, out)
+            return render_template('index.html', title="Scan", form=form, data=out)
         elif 'show_history' in request.form:
             data = select_data()
             return render_template('scan_history.html', title='Scan History', data=data)
