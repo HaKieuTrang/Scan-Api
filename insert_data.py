@@ -10,7 +10,7 @@ def insert_data(file_path, out):
                                              password='Trang1234#')
         time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         mysql_insert_query = """INSERT INTO scan_info (path, time, result) 
-                        VALUES (%s, %s, %s)"""
+                              VALUES (%s, %s, %s)"""
         cursor = connection.cursor()
         cursor.execute(mysql_insert_query, (file_path, time, out))
         connection.commit()
