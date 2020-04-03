@@ -1,4 +1,5 @@
 $(document).ready(function () {
+
     $('.filterable .btn-filter').click(function () {
         var $panel = $(this).parents('.filterable'),
             $filters = $panel.find('.filters input'),
