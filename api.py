@@ -4,7 +4,7 @@ import subprocess
 from form import Choose
 from tkinter import filedialog, Tk
 from insert_data import insert_data
-from select_data import select_data
+from select_data import select_data_scan, select_data_signatures
 from get_files import list_file_hard_drive
 
 app = Flask(__name__)
@@ -58,9 +58,22 @@ def index():
             insert_data(dir, out)
             return render_template('index.html', title="Scan", form=form, data=out)
         elif 'show_history' in request.form:
-            data = select_data()
+            data = select_data_scan()
             return render_template('scan_history.html', title='Scan History', data=data)
-
+        elif 'update_signatures' in request.form:
+            write_file = 'echo '
+            signatures = select_data_signatures()
+            content = '"'
+            for row in signatures:
+                content = content + row[1] + '\n'
+            content = content.rstrip("\n")
+            write_file = write_file + content + '"' + ' >> signatures.ndb'
+            create_file = 'mkdir /home/hatrang/clamscan && cd /home/hatrang/clamscan && touch signatures.ndb && ' + write_file
+            process = subprocess.Popen(create_file,
+                                       stdout=subprocess.PIPE,
+                                       stderr=subprocess.PIPE,
+                                       shell=True)
+            return render_template('index.html', title="Scan", form=form, data='update')
     return render_template('index.html', title="Scan", form=form)
 
 
