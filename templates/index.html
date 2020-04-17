@@ -15,14 +15,19 @@
                 <td>{{ form.scan_hard_drive }}</td>
             </tr>
             <tr>
-                <td></td>
                 <td>{{ form.show_history }}</td>
-                <td></td>
+                <td>{{ form.update_signatures }}</td>
             </tr>
         </table>
     </form>
     <div id="result">
         <textarea rows="15" cols="72" readonly placeholder="Scan result...">{{ data }}</textarea>
     </div>
+    {% if data=='update' %}
+    <script>
+        alert("Successfully Updated!");
+    </script>
+    {% endif %}
 </div>
+
 {% endblock %}
